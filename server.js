@@ -19,8 +19,7 @@ jsonReader('./tickets.json', (err, tickets) => {
 });
 
 const app = new Koa();
-app.use(koaBody({
-  urlencoded: true, }));
+app.use(koaBody({ urlencoded: true }));
 
 app.use(async (ctx, next) => {
   const origin = ctx.request.get('Origin');
@@ -50,8 +49,7 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async (ctx) => {
-  const {
-    method } = ctx.request.query;
+  const { method } = ctx.request.query;
   let { id } = ctx.request.query;
   switch (method) {
     case 'allTickets':
@@ -64,14 +62,13 @@ app.use(async (ctx) => {
       if (!id) {
         id = generateUniqueId(ticketList);
         ticketList.push(new TicketFull(
-          id, {...ctx.request.body}
+          id, { ...ctx.request.body },
         ));
       } else {
-        console.log(ctx.request)
         Object.entries(ctx.request.body)
           .forEach(([key, value]) => {
             if (value !== undefined) {
-              ticketList = ticketList.map((t, i) => {
+              ticketList.map((t, i) => {
                 if (`${t.id}` === id) {
                   ticketList[i][key] = value;
                 }
@@ -80,23 +77,27 @@ app.use(async (ctx) => {
             }
           });
       }
-      ctx.response.text = 'Ok';
+      console.log(ticketList);
+
       fs.writeFile('./tickets.json', JSON.stringify(ticketList), (err) => {
         if (err) throw new Error(err);
       });
+      ctx.response.body = JSON.stringify('Ok');
+      ctx.response.status = 200;
       return;
 
     case 'deleteTicket':
-      ticketList.splice(ticketList.findIndex((el) => (`${el.id}` === id)),1);
-      ctx.response.text = 'Ok';
-      fs.writeFile('/tickets.json', JSON.stringify(ticketList), (err) => {
+      ticketList.splice(ticketList.findIndex((el) => (`${el.id}` === id)), 1);
+
+      fs.writeFile('./tickets.json', JSON.stringify(ticketList), (err) => {
         if (err) throw new Error(err);
       });
+      ctx.response.body = JSON.stringify('Ok');
+      ctx.response.status = 200;
       return;
 
     default:
       ctx.response.status = 404;
-      return;
   }
 });
 

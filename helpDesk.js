@@ -16,12 +16,16 @@ module.exports = class HelpDesk {
 
   drawTickets(tickets) {
     tickets.forEach((ticket) => {
+      const tktContainer = document.createElement('div');
+      tktContainer.className = 'ticket-container';
+
       const tkt = document.createElement('div');
       tkt.className = 'ticket';
       tkt.id = ticket.id;
       tkt.innerText = ticket.id;
 
-      this.container.insertAdjacentElement('beforeend', tkt);
+      this.container.insertAdjacentElement('beforeend', tktContainer);
+      tktContainer.insertAdjacentElement('beforeend',tkt)
       tkt.addEventListener('click', (ev) => {
         ev.preventDefault();
         const desc = document.querySelector('.ticket-description');
@@ -46,9 +50,9 @@ module.exports = class HelpDesk {
       tkt.insertAdjacentElement('afterend', delTkt);
       delTkt.addEventListener('click', (ev) => {
         ev.preventDefault();
-        sendRequest(tkt, 'POST', { method: 'deleteTicket' }, undefined, {});
-        tkt.closest('.ticket-delete').remove();
-        tkt.closest('.ticket-edit').remove();
+        sendRequest(tkt, 'POST', { method: 'deleteTicket' }, () => {console.log('deletasd')});
+        tkt.closest('.ticket-container').querySelector('.ticket-delete').remove();
+        tkt.closest('.ticket-container').querySelector('.ticket-edit').remove();
         tkt.remove();
       });
 
@@ -77,6 +81,7 @@ module.exports = class HelpDesk {
            editForm.addEventListener('submit', (ev) => {
             ev.preventDefault();
             const formData = new FormData(ev.target);
+            console.log(formData.get('description'))
             sendRequest(tkt, 'POST', { method: 'createTicket' }, undefined, formData);
 
 
