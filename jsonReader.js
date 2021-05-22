@@ -8,8 +8,8 @@ module.exports = function jsonReader(filePath, cb) {
     try {
       const list = JSON.parse(fileData);
       return cb && cb(null, list);
-    } catch (err) {
-      return cb && cb(err);
+    } catch (e) {
+      return cb && cb(e);
     }
   });
 };

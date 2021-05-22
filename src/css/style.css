@@ -1,0 +1,93 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    font-size: 14px;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+  }
+  
+#container {
+  position: relative;
+  margin: 0 auto;
+  padding: 50px;
+  width: 50%;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+
+}
+
+.add-ticket {
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.ticket {
+  display: flex;
+  padding: 5px;
+  min-width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: rgb(178, 231, 213);
+}
+
+.ticket-info {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+  width:30%;
+
+}
+
+.ticket-delete, .ticket-edit {
+  font-size:20px;
+}
+
+.ticket-name, .ticket-delete, .ticket-edit {
+  cursor: default;
+
+}
+.ticket-description {
+  width:100%;
+  padding: 5px;
+  font-size: 12px;
+  display: block;
+  text-align: center;
+  background-color:  rgb(209, 243, 232);
+}
+
+.modal {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.5);
+  height: 100vh;
+  z-index: 1000;
+  margin:0;
+  padding:0;
+  top:0;
+  left:0;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;;
+}
+
+input, label {
+  padding: 5px;
+}

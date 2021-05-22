@@ -29,34 +29,40 @@ module.exports = class TicketManager {
   }
 
   getTicketFull(query) {
-    return new TicketFull(
-      ...Object.values(this.ticketList.find((ticket) => (`${ticket.id}` === query.id)))
+    const tick = new TicketFull(
+      ...Object.values(this.ticketList.find((ticket) => (`${ticket.id}` === query.id))),
     );
+    return tick;
   }
 
   createTicket(data) {
     const id = generateUniqueId(this.ticketList);
-    this.ticketList.push(new TicketFull({ id, ...data }));
+    this.ticketList.push(new TicketFull(id, data.name, undefined, undefined, data.description));
     this.refreshStorage();
     return 'Created';
   }
 
   updateTicket(data) {
+    const result = {};
     this.ticketList = this.ticketList.map((ticket) => {
       if (`${ticket.id}` === data.id) {
         Object.defineProperty(ticket, 'name', { value: data.name || ticket.name });
+        result.name = data.name || ticket.name;
         Object.defineProperty(ticket, 'description', { value: data.description || ticket.description });
+        result.description = data.description || ticket.description;
       }
       return ticket;
     });
     this.refreshStorage();
-    return 'Updated';
+    return result;
   }
 
   updateStatus(data) {
     this.ticketList = this.ticketList.map((ticket) => {
       if (`${ticket.id}` === data.id) {
-        Object.defineProperty(ticket, 'status', { value: data.status });
+        let status = false;
+        if (data.status === 'true') status = true;
+        Object.defineProperty(ticket, 'status', { value: status });
       }
       return ticket;
     });

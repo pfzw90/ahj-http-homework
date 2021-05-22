@@ -1,3 +1,5 @@
+/* eslint-disable no-return-await */
+/* eslint-disable consistent-return */
 const http = require('http');
 const Koa = require('koa');
 const koaBody = require('koa-body');
@@ -11,8 +13,9 @@ app.use(async (ctx, next) => { const origin = ctx.request.get('Origin'); if (!or
 
 app.use(async (ctx) => {
   let method;
-  if (ctx.request.method === 'GET') ({ method } = ctx.request.query);
-  else if (['POST', 'PATCH', 'DELETE'].includes(ctx.request.method)) ({ method } = ctx.request.body);
+  if (ctx.request.method === 'GET') {
+    ({ method } = ctx.request.query);
+  } else if (ctx.request.method === 'POST') ({ method } = ctx.request.body);
 
   const response = {
     success: true,

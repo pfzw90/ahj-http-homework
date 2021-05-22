@@ -2,11 +2,9 @@ const baseUrl = 'http://localhost:7070/';
 module.exports = function sendRequest(object, method, options, callbackfn, data = new FormData()) {
   const params = new URLSearchParams();
   params.set('method', options.method);
-  if (object.className === 'ticket') {
-    params.set('id', object.id);
-    data.set('id', object.id);
-    data.set('method', options.method);
-   }
+  if (object.className === 'ticket') params.set('id', object.id);
+  data.set('id', object.id);
+  data.set('method', options.method);
 
   const req = new XMLHttpRequest();
 
@@ -22,8 +20,5 @@ module.exports = function sendRequest(object, method, options, callbackfn, data 
   });
 
   req.open(method, `${baseUrl}?${params}`, true);
-  if (method !== 'GET') {
-    req.send(data);
-  }
-  else req.send();
+  req.send(data);
 };
