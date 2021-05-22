@@ -1,9 +1,12 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-return-await */
 /* eslint-disable consistent-return */
 const http = require('http');
 const Koa = require('koa');
 const koaBody = require('koa-body');
 const TicketManager = require('./ticketManager');
+
+const port = process.env.PORT || 7070;
 
 const ticketManager = new TicketManager();
 const app = new Koa();
@@ -43,4 +46,4 @@ app.use(async (ctx) => {
   ctx.body = JSON.stringify(response);
 });
 
-http.createServer(app.callback()).listen(7070);
+const server = http.createServer(app.callback()).listen(port);

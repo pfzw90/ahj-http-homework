@@ -89,8 +89,8 @@ module.exports = class HelpDesk {
 
           const ticketInfo = document.createElement('div');
           ticketInfo.className = 'ticket-info';
-          tkt.insertAdjacentElement('beforeend',ticketInfo)
-          
+          tkt.insertAdjacentElement('beforeend', ticketInfo);
+
           const createdTkt = document.createElement('span');
           createdTkt.className = 'ticket-created';
           createdTkt.innerText = `${ticket.created}`;
@@ -109,7 +109,7 @@ module.exports = class HelpDesk {
               <button class = "close-modal">Отмена</button>
               <button id="delete-ticket">Удалить</button>
               </div>`;
-            document.body.appendChild(editWindow)
+            document.body.appendChild(editWindow);
             document.querySelector('#delete-ticket').addEventListener('click', (delEv) => {
               delEv.preventDefault();
               sendRequest(tkt, 'POST', { method: 'deleteTicket' }, () => {
@@ -142,7 +142,7 @@ module.exports = class HelpDesk {
               <button class = "save">Сохранить</button>
               <form>
               </div>`;
-              document.body.appendChild(editWindow)
+              document.body.appendChild(editWindow);
               const editForm = document.querySelector('.edit-form');
               editForm.addEventListener('submit', ((ev) => {
                 ev.preventDefault();
